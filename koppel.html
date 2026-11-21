@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>HomeView instellen</title>
+<style>
+  :root {
+    --bg: #f2f2f7; --kaart: #fff; --tekst: #1c1c1e; --tekst-2: #6e6e73; --lijn: rgba(60,60,67,.15);
+    --blauw: #007aff; --groen: #34c759; --spotify: #1db954; --rood: #ff3b30;
+    --p1: #0a84ff; --p2: #ff375f; --p3: #30d158; --p4: #bf5af2; --samen: #ff9f0a;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #000; --kaart: #1c1c1e; --tekst: #f2f2f7; --tekst-2: #98989f; --lijn: rgba(84,84,88,.6); --blauw: #0a84ff; color-scheme: dark; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--tekst); font: 17px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; -webkit-text-size-adjust: 100%; }
+  main { max-width: 34rem; margin: 0 auto; padding: max(1.5rem, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 3rem max(16px, env(safe-area-inset-left)); }
+  h1 { font-size: 2rem; letter-spacing: -.02em; margin: .5rem 0 .2rem; }
+  .intro { color: var(--tekst-2); margin: 0 0 1.6rem; }
+  .kaart { background: var(--kaart); border-radius: 1.1rem; padding: 1.2rem 1.2rem 1.3rem; margin-bottom: 1.2rem; }
+  .kaart h2 { display: flex; align-items: center; gap: .6rem; font-size: 1.25rem; margin: 0 0 .4rem; }
+  .nr { width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--tekst); color: var(--kaart); font-size: .95rem; display: grid; place-items: center; flex: none; }
+  .kaart.klaar .nr { background: var(--groen); color: #fff; }
+  p { margin: .3rem 0 .8rem; }
+  .uitleg { color: var(--tekst-2); font-size: .95rem; }
+  button { font: inherit; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .knop { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; min-height: 3.2rem; border-radius: .9rem; font-weight: 600; color: #fff; background: var(--blauw); }
+  .knop:active { opacity: .7; }
+  .knop.spotify { background: var(--spotify); color: #000; }
+  .knop.zacht { background: rgba(120,120,128,.16); color: var(--blauw); }
+  .knop[disabled] { opacity: .4; }
+  .wie { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; padding: .25rem; border-radius: .8rem; background: rgba(120,120,128,.16); margin: .2rem 0 1rem; }
+  .wie button { min-height: 2.6rem; border-radius: .6rem; background: none; color: var(--tekst); font-weight: 500; }
+  .wie button.aan { background: var(--kaart); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  .wie button i { display: inline-block; width: .55rem; height: .55rem; border-radius: 50%; margin-right: .35rem; vertical-align: .08rem; }
+  ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+  ol li { margin: .35rem 0; }
+  ol b { font-weight: 600; }
+  textarea { width: 100%; min-height: 4.5rem; margin: .6rem 0; padding: .7rem .8rem; border-radius: .8rem; border: 1px solid var(--lijn); background: var(--bg); color: var(--tekst); font: 15px/1.3 ui-monospace, Menlo, monospace; word-break: break-all; }
+  .status { list-style: none; padding: 0; margin: .9rem 0 0; }
+  .status li { display: flex; align-items: center; gap: .5rem; padding: .55rem 0; border-top: 1px solid var(--lijn); font-size: .95rem; }
+  .status li .v { color: var(--groen); font-weight: 700; }
+  .status li .o { color: var(--tekst-2); }
+  .fout { color: var(--rood); font-size: .95rem; margin: .5rem 0 0; }
+  .goed { color: var(--groen); font-weight: 600; margin: .6rem 0 0; }
+  .verlopen { text-align: center; padding: 3rem 1rem; color: var(--tekst-2); }
+  [hidden] { display: none !important; }
+  label.veld { display: block; font-size: .85rem; font-weight: 600; color: var(--tekst-2); text-transform: uppercase; letter-spacing: .04em; margin: 1rem 0 .4rem; }
+  .invoer { width: 100%; min-height: 3rem; padding: .6rem .9rem; border-radius: .8rem; border: 1px solid var(--lijn); background: var(--bg); color: var(--tekst); font: inherit; }
+  .persoon { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+  .persoon i { width: .8rem; height: .8rem; border-radius: 50%; flex: none; }
+  .persoon .weg { width: 2.4rem; height: 2.4rem; border-radius: 50%; background: rgba(120,120,128,.16); color: var(--tekst-2); font-size: 1.2rem; flex: none; }
+  .erbij { background: none; color: var(--blauw); font-weight: 500; padding: .4rem 0; }
+  .plaats-gevonden { font-size: .9rem; color: var(--tekst-2); margin: .4rem 0 0; }
+  .knop + .goed, .knop + .fout { text-align: center; }
+  .open-agenda { margin: .5rem 0 .3rem; text-decoration: none; min-height: 2.8rem; }
+  .wie { grid-template-columns: 1fr; gap: .3rem; }
+  .wie button { text-align: left; padding: 0 .9rem; min-height: 3rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>HomeView instellen</h1>
+  <p class="intro" id="intro">Even geduld…</p>
+
+  <div id="inhoud" hidden>
+    <section class="kaart" id="kaart-huis">
+      <h2><span class="nr">1</span>Je huis</h2>
+      <label class="veld">Wie wonen er?</label>
+      <div id="personen"></div>
+      <button class="erbij" id="erbij">+ Nog iemand</button>
+      <label class="veld" for="plaats">Woonplaats (voor het weer)</label>
+      <input class="invoer" id="plaats" placeholder="Bijvoorbeeld Apeldoorn" autocomplete="address-level2">
+      <p class="plaats-gevonden" id="plaats-gevonden" hidden></p>
+      <p></p>
+      <button class="knop" id="bewaar-huis">Bewaar</button>
+      <p class="goed" id="huis-klaar" hidden>✓ Opgeslagen op het paneel</p>
+      <p class="fout" id="huis-fout" hidden></p>
+    </section>
+
+    <section class="kaart" id="kaart-spotify">
+      <h2><span class="nr">2</span>Muziek</h2>
+      <p class="uitleg">Log in met je Spotify-account. Daarna bedien je je muziek en speakers vanaf het paneel.</p>
+      <button class="knop spotify" id="spotify">Log in bij Spotify</button>
+      <p class="goed" id="spotify-klaar" hidden>✓ Spotify is gekoppeld</p>
+      <p class="fout" id="spotify-fout" hidden></p>
+    </section>
+
+    <section class="kaart" id="kaart-agenda">
+      <h2><span class="nr">3</span>Agenda</h2>
+      <p class="uitleg" id="agenda-eerst" hidden>Vul eerst bij stap 1 in wie er wonen.</p>
+      <div id="agenda-deel">
+        <p class="uitleg">Welke agenda voeg je toe?</p>
+        <div class="wie" id="wie"></div>
+        <p class="uitleg">Doe dit op de iPhone van <b id="wie-naam"></b>:</p>
+        <ol>
+          <li>Open de app <b>Agenda</b>:<br><a class="knop zacht open-agenda" href="calshow://">Open Agenda</a></li>
+          <li>Tik onderaan op <b>Agenda's</b>.</li>
+          <li>Tik op het rondje <b>ⓘ</b> naast <span id="welke-agenda">je agenda</span>.</li>
+          <li>Zet <b>Openbare agenda</b> aan. (Alleen wie de geheime link heeft, kan hem zien.)</li>
+          <li>Tik op <b>Deel koppeling…</b> en dan op <b>Kopieer</b>.</li>
+          <li>Kom terug naar deze pagina en tik hieronder op <b>Plak de link</b>.</li>
+        </ol>
+        <button class="knop" id="plak">Plak de link</button>
+        <div id="handmatig" hidden>
+          <textarea id="link" placeholder="Houd hier je vinger op en kies Plak" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+          <button class="knop" id="stuur">Zet op het paneel</button>
+        </div>
+        <p class="fout" id="agenda-fout" hidden></p>
+        <ul class="status" id="status"></ul>
+      </div>
+    </section>
+    <p class="uitleg" style="text-align:center">Je kunt een stap overslaan en later terugkomen.<br>Klaar? Tik op het paneel op <b>Klaar</b>.</p>
+  </div>
+
+  <div class="verlopen" id="verlopen" hidden>
+    <p><b>Deze QR-code is verlopen.</b></p>
+    <p>Maak op het paneel een nieuwe en scan die opnieuw.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var KASTJE = 'https://homeview-agenda.timev.workers.dev/koppel/';
+  var CLIENT = '3e8939358f744f439a8a819d925019e8';
+  var SCOPES = 'user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private user-library-read user-read-recently-played user-top-read';
+  var terug = location.origin + location.pathname;
+  var $ = function (id) { return document.getElementById(id); };
+  function lees(k) { try { return localStorage.getItem('koppel.' + k); } catch (e) { return null; } }
+  function bewaar(k, v) { try { localStorage.setItem('koppel.' + k, v); } catch (e) {} }
+
+  var q = new URLSearchParams(location.search);
+  var code = q.get('c') || q.get('state') || '';
+  if (!/^[A-Za-z0-9]{20,40}$/.test(code)) { toonVerlopen(); return; }
+
+  var leden = [], wie = '', huisGeladen = false, gekozenPlaats = null;
+  var KLEUREN = ['var(--p1)', 'var(--p2)', 'var(--p3)', 'var(--p4)'];
+  function naamVan(id) { return id === 'samen' ? 'Samen' : leden[+id.slice(1) - 1] || ''; }
+
+  function kastje(body) {
+    return fetch(KASTJE + code, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {})
+      .then(function (r) { return r.json().then(function (d) { d._status = r.status; return d; }); });
+  }
+  function toonVerlopen() { $('intro').hidden = true; $('inhoud').hidden = true; $('verlopen').hidden = false; }
+
+  function ververs() {
+    return kastje().then(function (d) {
+      if (d._status === 404) { toonVerlopen(); return; }
+      $('intro').textContent = 'Stel je paneel in vanaf je telefoon. Doe de stappen in je eigen tempo.';
+      if (!huisGeladen) {   // eerste keer: velden vullen met wat het paneel al weet
+        huisGeladen = true;
+        tekenPersonen(d.leden && d.leden.length ? d.leden : ['']);
+        if (d.plaats) $('plaats').value = d.plaats;
+      }
+      var nieuweLeden = d.leden || [];
+      if (nieuweLeden.join('|') !== leden.join('|')) { leden = nieuweLeden; tekenWie(); }
+      var alles = (d.ontvangen || []).map(function (x) { return { x: x, klaar: true }; })
+        .concat((d.onderweg || []).map(function (x) { return { x: x, klaar: false }; }));
+      var spotify = alles.filter(function (a) { return a.x === 'spotify'; })[0];
+      if (spotify) { $('spotify-klaar').hidden = false; $('spotify-klaar').textContent = spotify.klaar ? '✓ Spotify staat op het paneel' : '✓ Spotify is gekoppeld, het paneel haalt hem op…'; $('spotify').hidden = true; $('kaart-spotify').classList.add('klaar'); }
+      var huis = alles.filter(function (a) { return a.x === 'instellingen'; })[0];
+      if (huis) { $('huis-klaar').hidden = false; $('huis-klaar').textContent = huis.klaar ? '✓ Opgeslagen op het paneel' : '✓ Opgeslagen, het paneel haalt het op…'; $('kaart-huis').classList.add('klaar'); }
+      var ag = alles.filter(function (a) { return a.x !== 'spotify' && a.x !== 'instellingen'; });
+      $('status').innerHTML = ag.map(function (a) {
+        var n = a.x === 'samen' ? 'Gedeelde agenda' : 'Agenda van ' + (naamVan(a.x) || 'iemand');
+        return '<li><span class="' + (a.klaar ? 'v">✓' : 'o">…') + '</span>' + esc(n) + (a.klaar ? ' staat op het paneel' : ' wordt opgehaald') + '</li>';
+      }).join('');
+      if (ag.length) $('kaart-agenda').classList.add('klaar');
+      $('inhoud').hidden = false;
+    }).catch(function () { $('intro').textContent = 'Geen verbinding. Controleer het internet en probeer opnieuw.'; });
+  }
+
+  // ----- stap 1: je huis -----
+  function tekenPersonen(namen) {
+    $('personen').innerHTML = namen.map(function (n, i) {
+      return '<div class="persoon"><i style="background:' + KLEUREN[i] + '"></i><input class="invoer" data-p value="' + esc(n) + '" placeholder="Naam" autocapitalize="words">' +
+        (namen.length > 1 ? '<button class="weg" data-weg="' + i + '" aria-label="Weghalen">×</button>' : '') + '</div>';
+    }).join('');
+    $('erbij').hidden = namen.length >= 4;
+  }
+  function huidigeNamen() { return Array.prototype.map.call(document.querySelectorAll('[data-p]'), function (x) { return x.value; }); }
+  $('erbij').addEventListener('click', function () { tekenPersonen(huidigeNamen().concat([''])); var v = document.querySelectorAll('[data-p]'); v[v.length - 1].focus(); });
+  $('personen').addEventListener('click', function (e) {
+    var w = e.target.closest('[data-weg]'); if (!w) return;
+    var n = huidigeNamen(); n.splice(+w.getAttribute('data-weg'), 1); tekenPersonen(n);
+  });
+  $('plaats').addEventListener('input', function () { gekozenPlaats = null; $('plaats-gevonden').hidden = true; });
+  function zoekPlaats(naam) {
+    if (!naam) return Promise.resolve(null);
+    if (gekozenPlaats && gekozenPlaats.zoek === naam) return Promise.resolve(gekozenPlaats);
+    return fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&language=nl&name=' + encodeURIComponent(naam))
+      .then(function (r) { return r.json(); }).then(function (d) {
+        var p = d.results && d.results[0]; if (!p) return null;
+        gekozenPlaats = { zoek: naam, naam: p.name, lat: p.latitude, lon: p.longitude, uitleg: [p.name, p.admin1, p.country].filter(Boolean).join(', ') };
+        return gekozenPlaats;
+      });
+  }
+  $('bewaar-huis').addEventListener('click', function () {
+    var namen = huidigeNamen().map(function (n) { return n.trim(); }).filter(Boolean);
+    if (!namen.length) { fout('huis', 'Vul minstens één naam in.'); return; }
+    fout('huis', '');
+    var plaatsTekst = $('plaats').value.trim();
+    zoekPlaats(plaatsTekst).then(function (p) {
+      if (plaatsTekst && !p) { fout('huis', 'Die woonplaats kan ik niet vinden. Controleer de spelling.'); return; }
+      if (p) { $('plaats-gevonden').textContent = 'Weer voor ' + p.uitleg; $('plaats-gevonden').hidden = false; }
+      return kastje({ instellingen: { leden: namen, plaats: p ? { naam: p.naam, lat: p.lat, lon: p.lon } : null } }).then(function (d) {
+        if (d._status !== 200) { fout('huis', 'Dat lukte niet, probeer het nog eens.'); return; }
+        ververs();
+      });
+    }).catch(function () { fout('huis', 'Geen verbinding, probeer het nog eens.'); });
+  });
+
+  // ----- stap 3: wie hoort bij de agenda -----
+  function tekenWie() {
+    $('agenda-eerst').hidden = leden.length > 0;
+    $('agenda-deel').hidden = !leden.length;
+    var keuzes = leden.map(function (n, i) { return { id: 'p' + (i + 1), naam: 'Agenda van ' + n, kleur: KLEUREN[i] }; });
+    if (leden.length > 1) keuzes.unshift({ id: 'samen', naam: 'Gedeelde agenda (samen)', kleur: 'var(--samen)' });
+    if (!keuzes.some(function (k) { return k.id === wie; })) wie = keuzes.length ? keuzes[0].id : '';
+    $('wie').innerHTML = keuzes.map(function (k) {
+      return '<button data-wie="' + k.id + '"' + (k.id === wie ? ' class="aan"' : '') + '><i style="background:' + k.kleur + '"></i>' + esc(k.naam) + '</button>';
+    }).join('');
+    zetWie(wie);
+  }
+  function zetWie(w) {
+    wie = w;
+    Array.prototype.forEach.call(document.querySelectorAll('#wie button'), function (b) { b.classList.toggle('aan', b.getAttribute('data-wie') === w); });
+    $('wie-naam').textContent = w === 'samen' ? 'degene die de gedeelde agenda heeft gemaakt' : naamVan(w);
+    $('welke-agenda').textContent = w === 'samen' ? 'de gedeelde agenda (daar staat “Gedeeld met …”)' : 'je eigen agenda';
+  }
+  $('wie').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) zetWie(b.getAttribute('data-wie')); });
+
+  // ----- Spotify: inloggen op de telefoon, sleutel naar het kastje -----
+  function willekeurig(n) { var a = new Uint8Array(n); crypto.getRandomValues(a); return Array.prototype.map.call(a, function (x) { return 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.charAt(x % 62); }).join(''); }
+  function b64url(buf) { return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  $('spotify').addEventListener('click', function () {
+    var verifier = willekeurig(64); bewaar('pkce', verifier);
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)).then(function (h) {
+      location.href = 'https://accounts.spotify.com/authorize?' + new URLSearchParams({
+        client_id: CLIENT, response_type: 'code', redirect_uri: terug, scope: SCOPES,
+        code_challenge_method: 'S256', code_challenge: b64url(h), state: code
+      });
+    });
+  });
+  function spotifyTerug() {
+    if (!q.get('code') && !q.get('error')) return Promise.resolve();
+    history.replaceState(null, '', terug + '?c=' + code);
+    if (q.get('error')) { fout('spotify', 'Inloggen is geannuleerd. Probeer het nog eens.'); return Promise.resolve(); }
+    return fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ client_id: CLIENT, grant_type: 'authorization_code', code: q.get('code'), redirect_uri: terug, code_verifier: lees('pkce') || '' })
+    }).then(function (r) { if (!r.ok) throw new Error('token'); return r.json(); })
+      .then(function (d) { return kastje({ spotify: { access_token: d.access_token, refresh_token: d.refresh_token, expires_in: d.expires_in } }); })
+      .catch(function () { fout('spotify', 'Dat lukte niet. Mogelijk heeft dit Spotify-account nog geen toegang tot HomeView: in de testfase werkt het alleen met accounts die zijn aangemeld.'); });
+  }
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function fout(waar, tekst) { var el = $(waar + '-fout'); el.textContent = tekst; el.hidden = !tekst; }
+
+  // ----- Agenda: link plakken en naar het kastje -----
+  function stuurLink(link) {
+    link = (link || '').trim().split(/\s+/).filter(function (x) { return /^(webcal|https):\/\//i.test(x); })[0] || '';
+    if (!/icloud\.com\/published\//i.test(link)) {
+      fout('agenda', 'Dit lijkt geen link van een openbare agenda. Kopieer hem opnieuw via “Deel koppeling…”.');
+      $('handmatig').hidden = false; return;
+    }
+    fout('agenda', '');
+    kastje({ agenda: { wie: wie, link: link } }).then(function (d) {
+      if (d._status !== 200) { fout('agenda', d.fout || 'Dat lukte niet, probeer het nog eens.'); return; }
+      $('link').value = ''; $('handmatig').hidden = true; ververs();
+    }, function () { fout('agenda', 'Geen verbinding, probeer het nog eens.'); });
+  }
+  $('plak').addEventListener('click', function () {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(stuurLink, function () { $('handmatig').hidden = false; $('link').focus(); });
+    } else { $('handmatig').hidden = false; $('link').focus(); }
+  });
+  $('stuur').addEventListener('click', function () { stuurLink($('link').value); });
+
+  tekenWie();
+  spotifyTerug().then(ververs);
+  setInterval(ververs, 3000);
+})();
+</script>
+</body>
+</html>

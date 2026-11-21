@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Huiskamer">
+<meta name="theme-color" content="#000000">
+<title>Huiskamer</title>
+<link rel="apple-touch-icon" href="icoon.png">
+<link rel="stylesheet" href="paneel.css?v=1795255528">
+</head>
+<body>
+
+<!-- SVG-symbolen (in de stijl van Apples SF Symbols) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="s-speel" viewBox="0 0 24 24"><path d="M7 4.6v14.8a1 1 0 0 0 1.52.85l12.1-7.4a1 1 0 0 0 0-1.7L8.52 3.75A1 1 0 0 0 7 4.6z"/></symbol>
+  <symbol id="s-pauze" viewBox="0 0 24 24"><rect x="5.5" y="4" width="4.6" height="16" rx="1.4"/><rect x="13.9" y="4" width="4.6" height="16" rx="1.4"/></symbol>
+  <symbol id="s-vooruit" viewBox="0 0 24 24"><path d="M1.5 6.3v11.4a.9.9 0 0 0 1.42.73L11 12.9v4.8a.9.9 0 0 0 1.42.73l8.9-5.7a.9.9 0 0 0 0-1.46l-8.9-5.7A.9.9 0 0 0 11 6.3v4.8L2.92 5.57A.9.9 0 0 0 1.5 6.3z"/></symbol>
+  <symbol id="s-terug" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><path d="M1.5 6.3v11.4a.9.9 0 0 0 1.42.73L11 12.9v4.8a.9.9 0 0 0 1.42.73l8.9-5.7a.9.9 0 0 0 0-1.46l-8.9-5.7A.9.9 0 0 0 11 6.3v4.8L2.92 5.57A.9.9 0 0 0 1.5 6.3z"/></g></symbol>
+  <symbol id="s-speaker-zacht" viewBox="0 0 24 24"><path d="M4 9.2h3.2l4.6-4a.7.7 0 0 1 1.2.5v12.6a.7.7 0 0 1-1.2.5l-4.6-4H4a1 1 0 0 1-1-1v-3.6a1 1 0 0 1 1-1z"/></symbol>
+  <symbol id="s-speaker-hard" viewBox="0 0 24 24"><path d="M2 9.2h3.2l4.6-4a.7.7 0 0 1 1.2.5v12.6a.7.7 0 0 1-1.2.5l-4.6-4H2a1 1 0 0 1-1-1v-3.6a1 1 0 0 1 1-1z"/><path d="M14.5 9a4.2 4.2 0 0 1 0 6M17.3 6.4a8 8 0 0 1 0 11.2M20.1 3.8a11.8 11.8 0 0 1 0 16.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+  <symbol id="s-locatie" viewBox="0 0 24 24"><path d="M20.6 3.4 3.9 10.3c-.8.33-.7 1.5.15 1.66l7.1 1.4 1.4 7.1c.17.85 1.33.95 1.66.15z"/></symbol>
+  <symbol id="s-slot" viewBox="0 0 24 24"><path d="M7.5 10V7.6a4.5 4.5 0 0 1 9 0V10h.6A1.9 1.9 0 0 1 19 11.9v7.2a1.9 1.9 0 0 1-1.9 1.9H6.9A1.9 1.9 0 0 1 5 19.1v-7.2A1.9 1.9 0 0 1 6.9 10zm2.2 0h4.6V7.6a2.3 2.3 0 0 0-4.6 0z"/></symbol>
+  <symbol id="s-oog" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 5.5c4.6 0 8.2 3.4 9.6 5.9a1.3 1.3 0 0 1 0 1.2C20.2 15.1 16.6 18.5 12 18.5s-8.2-3.4-9.6-5.9a1.3 1.3 0 0 1 0-1.2C3.8 8.9 7.4 5.5 12 5.5zm0 3a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></symbol>
+  <symbol id="s-shuffle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3.5c2.2 0 3.4 1.2 4.6 3.4l1.8 3.2c1.2 2.2 2.4 3.4 4.6 3.4H21"/><path d="M3 17h3.5c1.5 0 2.5-.6 3.4-1.7M14.1 8.7c.9-1.1 1.9-1.7 3.4-1.7H21"/><path d="M18.5 4.5 21 7l-2.5 2.5M18.5 14.5 21 17l-2.5 2.5"/></g></symbol>
+  <symbol id="s-herhaal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11V9.5A3.5 3.5 0 0 1 7.5 6H20"/><path d="M17 3l3 3-3 3"/><path d="M20 13v1.5a3.5 3.5 0 0 1-3.5 3.5H4"/><path d="M7 21l-3-3 3-3"/></g></symbol>
+  <symbol id="s-zoek" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></g></symbol>
+  <symbol id="s-meer" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></symbol>
+  <symbol id="s-pijl-terug" viewBox="0 0 24 24"><path d="M15 4.5 7.5 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="s-hierna" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h12M3 12h12M3 18h7"/><path d="M17 15v6M14 18h6"/></g></symbol>
+  <symbol id="s-persoon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5z"/></symbol>
+  <symbol id="s-plaat" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></symbol>
+  <symbol id="s-speaker" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.5 2h7A2.5 2.5 0 0 1 18 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 6 19.5v-15A2.5 2.5 0 0 1 8.5 2zM12 11.2a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2zm0-6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></symbol>
+</svg>
+
+<!-- achtergrond: rustig Apple-achtig behang -->
+<div class="behang" aria-hidden="true">
+  <div class="behang-basis"></div>
+  <div class="behang-donker"></div>
+</div>
+
+<div class="pager" id="pager">
+
+  <!-- ===== wijzerplaat 1: klok (rustscherm) ===== -->
+  <section class="gezicht klok-gezicht" id="klok-gezicht">
+    <div class="kg-boven" id="kg-boven">
+      <div class="kg-datum" id="kg-datum">&nbsp;</div>
+      <div class="kg-tijd" id="kg-tijd">--:--</div>
+    </div>
+    <div class="kg-widgets" id="kg-widgets">
+      <div class="kw glas" id="kw-weer"></div>
+      <div class="kw glas" id="kw-agenda"></div>
+    </div>
+    <!-- Nu aan het spelen: groeit als er muziek speelt -->
+    <div class="np" id="np">
+      <div class="np-binnen glas">
+        <div class="np-hoes" id="np-hoes"></div>
+        <div class="np-rechts" id="np-rechts">
+          <div class="np-route"><svg><use href="#s-speaker"/></svg><span id="np-route"></span></div>
+          <div class="np-titel" id="np-titel"></div>
+          <div class="np-artiest" id="np-artiest"></div>
+          <div class="voortgang">
+            <div class="vg-balk"><div class="vg-vul" data-vg></div></div>
+            <div class="vg-tijden"><span data-vg-nu>0:00</span><span data-vg-rest>-0:00</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== wijzerplaat 2: overzicht met widgets ===== -->
+  <section class="gezicht overzicht" id="paneel">
+    <div class="klok-blok" id="klok">
+      <div class="kb-datum" id="datum">&nbsp;</div>
+      <div class="kb-tijd" id="tijd">--:--</div>
+    </div>
+
+    <!-- weer, zoals de Weer-widget -->
+    <div class="widget weer-widget glas" id="weer">
+      <div class="ww-boven">
+        <div>
+          <div class="ww-plaats"><span id="weer-plaats">Apeldoorn</span><svg><use href="#s-locatie"/></svg></div>
+          <div class="ww-temp" id="weer-temp">–°</div>
+        </div>
+        <div class="ww-rechts">
+          <span class="ww-icoon" id="weer-icoon"></span>
+          <div class="ww-tekst" id="weer-omschrijving">Weer laden…</div>
+          <div class="ww-hl" id="weer-hl"></div>
+        </div>
+      </div>
+      <div class="ww-uren" id="weer-uren"></div>
+    </div>
+
+    <!-- agenda, zoals de Agenda-widget -->
+    <div class="widget agenda glas" id="agenda">
+      <div class="ag-boven">
+        <div class="ag-kop">
+          <div class="ag-dag" id="ag-dag">&nbsp;</div>
+          <div class="ag-nummer" id="ag-nummer">&nbsp;</div>
+        </div>
+        <div class="segment" id="agenda-filter" role="tablist">
+          <span class="segment-pil"></span>
+          <button data-wie="alles" class="aan">Alles</button>
+        </div>
+        <button class="ag-prive" id="ag-prive" aria-label="Agenda tonen of verbergen">
+          <svg class="ic-slot"><use href="#s-slot"/></svg><svg class="ic-oog"><use href="#s-oog"/></svg><span id="ag-prive-tekst">Toon</span>
+        </button>
+        <button class="knop-glas ag-dicht" id="ag-dicht">Klaar</button>
+      </div>
+      <div class="agenda-lijst" id="agenda-lijst"></div>
+      <!-- groot: de komende 7 dagen naast elkaar -->
+      <div class="ag-week" id="ag-week"></div>
+    </div>
+
+    <!-- muziek, zoals de speler van Apple Music -->
+    <section class="widget muziek glas" id="muziek">
+      <button class="greep" id="greep" aria-label="Muziek tonen of verbergen"><span></span></button>
+      <div class="muziek-lade" id="lade">
+        <div class="lade-kop">
+          <button class="lade-terug" id="lade-terug" hidden><svg><use href="#s-pijl-terug"/></svg>Terug</button>
+          <h2 id="lade-titel">Muziek</h2>
+          <label class="zoekveld">
+            <svg><use href="#s-zoek"/></svg>
+            <input id="zoek" type="search" placeholder="Artiesten, nummers, podcasts" enterkeyhint="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <button type="button" class="zoek-wis" id="zoek-wis" aria-label="Wissen" hidden>×</button>
+          </label>
+          <button class="knop-glas" id="lade-dicht">Klaar</button>
+        </div>
+        <div class="lade-inhoud" id="lade-inhoud"></div>
+        <div class="ld-menu" id="ld-menu" hidden>
+          <button data-m="hierna"><svg><use href="#s-hierna"/></svg>Speel hierna</button>
+          <button data-m="artiest" id="menu-artiest"><svg><use href="#s-persoon"/></svg>Naar artiest</button>
+          <button data-m="album" id="menu-album"><svg><use href="#s-plaat"/></svg>Naar album</button>
+        </div>
+      </div>
+      <div class="mk-blok">
+        <span class="mk-icoon"><svg><use href="#s-speaker"/></svg></span>
+        <span class="mk-tekst"><b>Muziek</b><span>Bedien Spotify en je speakers vanaf dit scherm</span></span>
+        <button class="leeg-knop" data-koppel>Koppel muziek</button>
+      </div>
+      <div class="muziek-rij">
+        <button class="hoes" id="hoes" aria-label="Afspeellijsten"><span class="hoes-beeld" id="hoes-beeld"></span></button>
+        <div class="nummer">
+          <span class="titel" id="titel">Niets aan het spelen</span>
+          <span class="artiest" id="artiest">Tik op ▶ om muziek te starten</span>
+          <div class="voortgang">
+            <div class="vg-balk"><div class="vg-vul" data-vg></div></div>
+            <div class="vg-tijden"><span data-vg-nu>0:00</span><span data-vg-rest>-0:00</span></div>
+          </div>
+        </div>
+        <div class="knoppen">
+          <button class="knop klein" id="shuffle" aria-label="Shuffle" aria-pressed="false"><svg><use href="#s-shuffle"/></svg></button>
+          <button class="knop" id="vorige" aria-label="Vorige"><svg><use href="#s-terug"/></svg></button>
+          <button class="knop speel" id="speel" aria-label="Afspelen of pauzeren">
+            <svg class="ic-speel"><use href="#s-speel"/></svg>
+            <svg class="ic-pauze"><use href="#s-pauze"/></svg>
+          </button>
+          <button class="knop" id="volgende" aria-label="Volgende"><svg><use href="#s-vooruit"/></svg></button>
+          <button class="knop klein" id="herhaal" aria-label="Herhalen staat uit"><svg><use href="#s-herhaal"/></svg><span class="een-teken">1</span></button>
+        </div>
+        <div class="volume">
+          <div class="schuif" id="volume" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100">
+            <svg class="vol-l"><use href="#s-speaker-zacht"/></svg>
+            <div class="schuif-baan" id="volume-baan"><div class="schuif-vul" id="volume-vul"></div></div>
+            <svg class="vol-r"><use href="#s-speaker-hard"/></svg>
+          </div>
+          <button class="route" id="route" aria-label="Kies speaker"><svg><use href="#s-speaker"/></svg><span id="apparaat">–</span></button>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+
+<!-- stippen: welke wijzerplaat -->
+<div class="stippen" id="stippen"><i></i><i></i></div>
+
+<!-- instellingen (klok 2 seconden ingedrukt houden) -->
+<div class="blad" id="instellingen" hidden>
+  <div class="blad-binnen">
+    <div class="blad-kop">
+      <h2>Instellingen</h2>
+      <button class="knop-glas" data-sluit>Klaar</button>
+    </div>
+    <div class="groep">
+      <button class="rij rij-knop" id="koppel-open"><span>Instellen met je telefoon</span><span class="knop-tekst">QR-code ›</span></button>
+    </div>
+    <div class="groep-titel">Huis</div>
+    <div class="groep">
+      <div class="rij"><span>Wie wonen er</span><span class="status" id="st-leden">–</span></div>
+      <div class="rij"><span>Plaats (weer)</span>
+        <input id="in-plaats" type="text" placeholder="Woonplaats" autocomplete="off">
+        <button class="knop-tekst" id="plaats-zoek">Zoek</button>
+      </div>
+    </div>
+    <div class="groep-titel">Koppelingen</div>
+    <div class="groep">
+      <div class="rij"><span>Agenda</span><span class="status" id="ag-status">Niet gekoppeld</span></div>
+      <div class="rij"><span>Spotify</span><span class="status" id="spotify-status">Niet gekoppeld</span>
+        <button class="knop-tekst" id="spotify-koppel">Koppel</button></div>
+    </div>
+    <div class="groep-titel">Beveiliging</div>
+    <div class="groep">
+      <label class="rij"><span>Code</span><input id="in-code" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="Geen (4 tot 6 cijfers)" autocomplete="off"></label>
+    </div>
+    <div class="groep">
+      <button class="rij rij-knop" id="vernieuw"><span>Vernieuwen</span><span class="knop-tekst">↻</span></button>
+    </div>
+    <div class="groep">
+      <button class="rij rij-knop wis" id="wis-alles">Alles wissen…</button>
+    </div>
+    <p class="hulp">Deze instellingen open je door de klok 2 seconden ingedrukt te houden. Met een code kan bezoek er niet bij.</p>
+  </div>
+</div>
+
+<!-- code invoeren, zoals het toegangsscherm van een iPhone -->
+<div class="blad codeblad" id="codeblad" hidden>
+  <div class="code-binnen">
+    <p class="code-titel">Voer code in</p>
+    <div class="code-stippen" id="code-stippen"></div>
+    <div class="code-toetsen" id="code-toetsen">
+      <button data-c="1">1</button><button data-c="2">2</button><button data-c="3">3</button>
+      <button data-c="4">4</button><button data-c="5">5</button><button data-c="6">6</button>
+      <button data-c="7">7</button><button data-c="8">8</button><button data-c="9">9</button>
+      <button class="code-tekst" data-sluit>Annuleer</button><button data-c="0">0</button><button class="code-tekst" data-c="wis">Wis</button>
+    </div>
+  </div>
+</div>
+
+<div class="apparaten" id="apparaten" hidden></div>
+
+<!-- koppelen met de telefoon: QR-code -->
+<div class="blad" id="koppelblad" hidden>
+  <div class="blad-binnen koppel-binnen">
+    <div class="blad-kop">
+      <h2 id="koppel-titel">Instellen met je telefoon</h2>
+      <button class="knop-glas" data-sluit id="koppel-klaar">Klaar</button>
+    </div>
+    <div class="koppel-rij">
+      <div class="qr-vak"><div class="qr" id="qr"></div><p class="qr-fout" id="qr-fout" hidden>Geen verbinding.<br>Sluit en probeer opnieuw.</p></div>
+      <div class="koppel-tekst">
+        <p class="welkom-tekst">Je stelt alles in op je telefoon: wie er wonen, het weer, je muziek en je agenda's.</p>
+        <ol>
+          <li>Open de <b>camera</b> van je iPhone.</li>
+          <li>Richt hem op de code en tik op de gele link.</li>
+          <li>Volg de stappen op je telefoon.</li>
+        </ol>
+        <ul class="koppel-status" id="koppel-status"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="melding" id="melding"></div>
+
+<script src="agenda-ics.js?v=1795255528"></script>
+<script src="paneel.js?v=1795255528"></script>
+</body>
+</html>
